@@ -739,7 +739,7 @@ gen_ld_script() {
 }
 
 build_dlfcn() {
-  do_git_checkout https://github.com/dlfcn-win32/dlfcn-win32.git
+  do_git_checkout https://hub.fastgit.org/dlfcn-win32/dlfcn-win32.git
   cd dlfcn-win32_git
     if [[ ! -f Makefile.bak ]]; then # Change CFLAGS.
       sed -i.bak "s/-O3/-O2/" Makefile
@@ -773,7 +773,7 @@ build_liblzma() {
 }
 
 build_zlib() {
-  download_and_unpack_file https://github.com/madler/zlib/archive/v1.2.11.tar.gz zlib-1.2.11
+  download_and_unpack_file https://hub.fastgit.org/madler/zlib/archive/v1.2.11.tar.gz zlib-1.2.11
   cd zlib-1.2.11
     local make_options
     if [[ $compiler_flavors == "native" ]]; then
@@ -823,10 +823,10 @@ build_sdl2() {
 }
 
 build_amd_amf_headers() {
-  # was https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git too big
-  # or https://github.com/DeadSix27/AMF smaller
+  # was https://hub.fastgit.org/GPUOpen-LibrariesAndSDKs/AMF.git too big
+  # or https://hub.fastgit.org/DeadSix27/AMF smaller
   # but even smaller!
-  do_git_checkout https://github.com/rdp/amf_headers.git amf_headers_git
+  do_git_checkout https://hub.fastgit.org/rdp/amf_headers.git amf_headers_git
 
   cd amf_headers_git
     if [ ! -f "already_installed" ]; then
@@ -848,7 +848,7 @@ build_nv_headers() {
 }
 
 build_intel_quicksync_mfx() { # i.e. qsv, disableable via command line switch...
-  do_git_checkout https://github.com/lu-zero/mfx_dispatch.git mfx_dispatch_git 2cd279f # lu-zero?? oh well seems somewhat supported...
+  do_git_checkout https://hub.fastgit.org/lu-zero/mfx_dispatch.git mfx_dispatch_git 2cd279f # lu-zero?? oh well seems somewhat supported...
   cd mfx_dispatch_git
     if [[ ! -f "configure" ]]; then
       autoreconf -fiv || exit 1
@@ -866,7 +866,7 @@ build_intel_quicksync_mfx() { # i.e. qsv, disableable via command line switch...
 
 build_libleptonica() {
   build_libjpeg_turbo
-  do_git_checkout https://github.com/DanBloomberg/leptonica.git leptonica_git 1.80.0
+  do_git_checkout https://hub.fastgit.org/DanBloomberg/leptonica.git leptonica_git 1.80.0
   cd leptonica_git
     export CPPFLAGS="-DOPJ_STATIC"
     generic_configure_make_install
@@ -881,14 +881,14 @@ build_libtiff() {
 }
 
 build_libtensorflow() {
-  do_git_checkout_and_make_install https://github.com/tensorflow/tensorflow.git
+  do_git_checkout_and_make_install https://hub.fastgit.org/tensorflow/tensorflow.git
 }
 
 build_glib() {
   export CPPFLAGS="$CPPFLAGS -DLIBXML_STATIC -liconv" # gettext build...
   generic_download_and_make_and_install  https://ftp.gnu.org/pub/gnu/gettext/gettext-0.21.tar.gz
   reset_cppflags
-  generic_download_and_make_and_install  https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz # also dep
+  generic_download_and_make_and_install  https://hub.fastgit.org/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz # also dep
   download_and_unpack_file https://gitlab.gnome.org/GNOME/glib/-/archive/2.64.3/glib-2.64.3.tar.gz
   cd glib-2.64.3
     apply_patch  file://$patch_dir/glib-2.64.3_mingw-static.patch -p1
@@ -915,7 +915,7 @@ build_glib() {
 
 build_lensfun() {
   build_glib
-  do_git_checkout https://github.com/lensfun/lensfun.git lensfun_git
+  do_git_checkout https://hub.fastgit.org/lensfun/lensfun.git lensfun_git
   cd lensfun_git
     export CMAKE_STATIC_LINKER_FLAGS='-lws2_32 -pthread'
     do_cmake "-DBUILD_STATIC=on -DCMAKE_INSTALL_DATAROOTDIR=$mingw_w64_x86_64_prefix"
@@ -929,7 +929,7 @@ build_lensfun() {
 build_libtesseract() {
   build_libtiff # no disable configure option for this in tesseract? odd...
   build_libleptonica
-  do_git_checkout https://github.com/tesseract-ocr/tesseract.git tesseract_git 4.1.1
+  do_git_checkout https://hub.fastgit.org/tesseract-ocr/tesseract.git tesseract_git 4.1.1
   cd tesseract_git
     if [[ $compiler_flavors != "native"  ]]; then
       apply_patch file://$patch_dir/tesseract-4.1.1_mingw-std-threads.patch
@@ -944,14 +944,14 @@ build_libtesseract() {
 }
 
 build_libzimg() {
-  do_git_checkout https://github.com/sekrit-twc/zimg.git zimg_git
+  do_git_checkout https://hub.fastgit.org/sekrit-twc/zimg.git zimg_git
   cd zimg_git
     generic_configure_make_install
   cd ..
 }
 
 build_libopenjpeg() {
-  do_git_checkout https://github.com/uclouvain/openjpeg.git # basically v2.3+
+  do_git_checkout https://hub.fastgit.org/uclouvain/openjpeg.git # basically v2.3+
   cd openjpeg_git
     do_cmake_and_install "-DBUILD_CODEC=0"
   cd ..
@@ -970,14 +970,14 @@ build_glew() {
 }
 
 build_glfw() {
-  download_and_unpack_file https://github.com/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip glfw-3.3.2
+  download_and_unpack_file https://hub.fastgit.org/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip glfw-3.3.2
   cd glfw-3.3.2
     do_cmake_and_install
   cd ..
 }
 
 build_libpng() {
-  do_git_checkout https://github.com/glennrp/libpng.git
+  do_git_checkout https://hub.fastgit.org/glennrp/libpng.git
   cd libpng_git
     generic_configure
     do_make_and_make_install
@@ -985,7 +985,7 @@ build_libpng() {
 }
 
 build_libwebp() {
-  do_git_checkout https://chromium.googlesource.com/webm/libwebp.git
+  do_git_checkout https://hub.fastgit.org/webmproject/libwebp.git
   cd libwebp_git
     export LIBPNG_CONFIG="$mingw_w64_x86_64_prefix/bin/libpng-config --static" # LibPNG somehow doesn't get autodetected.
     generic_configure "--disable-wic"
@@ -996,12 +996,12 @@ build_libwebp() {
 
 build_harfbuzz() {
   local new_build=false
-  do_git_checkout https://github.com/harfbuzz/harfbuzz.git harfbuzz_git "origin/main"
+  do_git_checkout https://hub.fastgit.org/harfbuzz/harfbuzz.git harfbuzz_git "origin/main"
   if [ ! -f harfbuzz_git/already_done_harf ]; then # Not done or new master, so build
     new_build=true
   fi
 
-  # basically gleaned from https://gist.github.com/roxlu/0108d45308a0434e27d4320396399153
+  # basically gleaned from https://gist.hub.fastgit.org/roxlu/0108d45308a0434e27d4320396399153
   build_freetype "--without-harfbuzz" $new_build # Check for initial or new freetype or force rebuild if needed
   local new_freetype=$?
   if $new_build || [ $new_freetype = 0 ]; then # 0 is true
@@ -1055,7 +1055,7 @@ build_libxml2() {
 }
 
 build_libvmaf() {
-  do_git_checkout https://github.com/Netflix/vmaf.git vmaf_git v1.5.2
+  do_git_checkout https://hub.fastgit.org/Netflix/vmaf.git vmaf_git v1.5.2
   cd vmaf_git
     apply_patch file://$patch_dir/libvmaf.various-1.5.2.patch -p1
     cd libvmaf
@@ -1108,9 +1108,9 @@ build_librtmfp() {
   # needs some version of openssl...
   # build_openssl-1.0.2 # fails OS X
   build_openssl-1.1.1
-  do_git_checkout https://github.com/MonaSolutions/librtmfp.git
+  do_git_checkout https://hub.fastgit.org/MonaSolutions/librtmfp.git
   cd librtmfp_git/include/Base
-    do_git_checkout https://github.com/meganz/mingw-std-threads.git mingw-std-threads # our g++ apparently doesn't have std::mutex baked in...weird...this replaces it...
+    do_git_checkout https://hub.fastgit.org/meganz/mingw-std-threads.git mingw-std-threads # our g++ apparently doesn't have std::mutex baked in...weird...this replaces it...
   cd ../../..
   cd librtmfp_git
     if [[ $compiler_flavors != "native" ]]; then
@@ -1137,7 +1137,7 @@ build_libnettle() {
     if [[ $compiler_flavors == "native" ]]; then
       config_options+=" --libdir=${mingw_w64_x86_64_prefix}/lib" # Otherwise native builds install to /lib32 or /lib64 which gnutls doesn't find
     fi
-    generic_configure "$config_options" # in case we have both gnutls and openssl, just use gnutls [except that gnutls uses this so...huh? https://github.com/rdp/ffmpeg-windows-build-helpers/issues/25#issuecomment-28158515
+    generic_configure "$config_options" # in case we have both gnutls and openssl, just use gnutls [except that gnutls uses this so...huh? https://hub.fastgit.org/rdp/ffmpeg-windows-build-helpers/issues/25#issuecomment-28158515
     do_make_and_make_install # What's up with "Configured with: ... --with-gmp=/cygdrive/d/ffmpeg-windows-build-helpers-master/native_build/windows/ffmpeg_local_builds/sandbox/cross_compilers/pkgs/gmp/gmp-6.1.2-i686" in 'config.log'? Isn't the 'gmp-6.1.2' above being used?
   cd ..
 }
@@ -1161,7 +1161,7 @@ build_gnutls() {
     generic_configure "--disable-doc --disable-tools --disable-cxx --disable-tests --disable-gtk-doc-html --disable-libdane --disable-nls --enable-local-libopts --disable-guile --with-included-libtasn1 --without-p11-kit"
     do_make_and_make_install
     if [[ $compiler_flavors != "native"  ]]; then
-      # libsrt doesn't know how to use its pkg deps :| https://github.com/Haivision/srt/issues/565
+      # libsrt doesn't know how to use its pkg deps :| https://hub.fastgit.org/Haivision/srt/issues/565
       sed -i.bak 's/-lgnutls.*/-lgnutls -lcrypt32 -lnettle -lhogweed -lgmp -lidn2 -liconv -lunistring/' "$PKG_CONFIG_PATH/gnutls.pc"
       if [[ $OSTYPE == darwin* ]]; then
         sed -i.bak 's/-lgnutls.*/-lgnutls -framework Security -framework Foundation/' "$PKG_CONFIG_PATH/gnutls.pc"
@@ -1269,14 +1269,14 @@ build_openssl-1.1.1() {
 }
 
 build_libogg() {
-  do_git_checkout https://github.com/xiph/ogg.git
+  do_git_checkout https://hub.fastgit.org/xiph/ogg.git
   cd ogg_git
     generic_configure_make_install
   cd ..
 }
 
 build_libvorbis() {
-  do_git_checkout https://github.com/xiph/vorbis.git
+  do_git_checkout https://hub.fastgit.org/xiph/vorbis.git
   cd vorbis_git
     generic_configure "--disable-docs --disable-examples --disable-oggtest"
     do_make_and_make_install
@@ -1284,7 +1284,7 @@ build_libvorbis() {
 }
 
 build_libopus() {
-  do_git_checkout https://github.com/xiph/opus.git
+  do_git_checkout https://hub.fastgit.org/xiph/opus.git
   cd opus_git
     generic_configure "--disable-doc --disable-extra-programs --disable-stack-protector"
     do_make_and_make_install
@@ -1292,7 +1292,7 @@ build_libopus() {
 }
 
 build_libspeexdsp() {
-  do_git_checkout https://github.com/xiph/speexdsp.git
+  do_git_checkout https://hub.fastgit.org/xiph/speexdsp.git
   cd speexdsp_git
     generic_configure "--disable-examples"
     do_make_and_make_install
@@ -1300,7 +1300,7 @@ build_libspeexdsp() {
 }
 
 build_libspeex() {
-  do_git_checkout https://github.com/xiph/speex.git
+  do_git_checkout https://hub.fastgit.org/xiph/speex.git
   cd speex_git
     export SPEEXDSP_CFLAGS="-I$mingw_w64_x86_64_prefix/include"
     export SPEEXDSP_LIBS="-L$mingw_w64_x86_64_prefix/lib -lspeexdsp" # 'configure' somehow can't find SpeexDSP with 'pkg-config'.
@@ -1312,7 +1312,7 @@ build_libspeex() {
 }
 
 build_libtheora() {
-  do_git_checkout https://github.com/xiph/theora.git
+  do_git_checkout https://hub.fastgit.org/xiph/theora.git
   cd theora_git
     generic_configure "--disable-doc --disable-spec --disable-oggtest --disable-vorbistest --disable-examples --disable-asm" # disable asm: avoid [theora @ 0x1043144a0]error in unpack_block_qpis in 64 bit... [OK OS X 64 bit tho...]
     do_make_and_make_install
@@ -1320,7 +1320,7 @@ build_libtheora() {
 }
 
 build_libsndfile() {
-  do_git_checkout https://github.com/libsndfile/libsndfile.git
+  do_git_checkout https://hub.fastgit.org/libsndfile/libsndfile.git
   cd libsndfile_git
     generic_configure "--disable-sqlite --disable-external-libs --disable-full-suite"
     do_make_and_make_install
@@ -1345,7 +1345,7 @@ build_lame() {
 }
 
 build_twolame() {
-  do_git_checkout https://github.com/njh/twolame.git twolame_git "origin/main"
+  do_git_checkout https://hub.fastgit.org/njh/twolame.git twolame_git "origin/main"
   cd twolame_git
     if [[ ! -f Makefile.am.bak ]]; then # Library only, front end refuses to build for some reason with git master
       sed -i.bak "/^SUBDIRS/s/ frontend.*//" Makefile.am || exit 1
@@ -1360,9 +1360,9 @@ build_fdk-aac() {
 local checkout_dir=fdk-aac_git
     if [[ ! -z $fdk_aac_git_checkout_version ]]; then
       checkout_dir+="_$fdk_aac_git_checkout_version"
-      do_git_checkout "https://github.com/mstorsjo/fdk-aac.git" $checkout_dir "refs/tags/$fdk_aac_git_checkout_version"
+      do_git_checkout "https://hub.fastgit.org/mstorsjo/fdk-aac.git" $checkout_dir "refs/tags/$fdk_aac_git_checkout_version"
     else
-      do_git_checkout "https://github.com/mstorsjo/fdk-aac.git" $checkout_dir
+      do_git_checkout "https://hub.fastgit.org/mstorsjo/fdk-aac.git" $checkout_dir
     fi
   cd $checkout_dir
     if [[ ! -f "configure" ]]; then
@@ -1378,14 +1378,14 @@ build_libopencore() {
 }
 
 build_libilbc() {
-  do_git_checkout https://github.com/TimothyGu/libilbc.git libilbc_git v2.0.2
+  do_git_checkout https://hub.fastgit.org/TimothyGu/libilbc.git libilbc_git v2.0.2
   cd libilbc_git
     generic_configure_make_install
   cd ..
 }
 
 build_libmodplug() {
-  do_git_checkout https://github.com/Konstanty/libmodplug.git
+  do_git_checkout https://hub.fastgit.org/Konstanty/libmodplug.git
   cd libmodplug_git
     sed -i.bak 's/__declspec(dllexport)//' "$mingw_w64_x86_64_prefix/include/libmodplug/modplug.h" #strip DLL import/export directives
     sed -i.bak 's/__declspec(dllimport)//' "$mingw_w64_x86_64_prefix/include/libmodplug/modplug.h"
@@ -1406,7 +1406,7 @@ build_libgme() {
 }
 
 build_mingw_std_threads() {
-  do_git_checkout https://github.com/meganz/mingw-std-threads.git # it needs std::mutex too :|
+  do_git_checkout https://hub.fastgit.org/meganz/mingw-std-threads.git # it needs std::mutex too :|
   cd mingw-std-threads_git
     cp *.h "$mingw_w64_x86_64_prefix/include"
   cd ..
@@ -1414,8 +1414,8 @@ build_mingw_std_threads() {
 
 build_opencv() {
   build_mingw_std_threads
-  #do_git_checkout https://github.com/opencv/opencv.git # too big :|
-  download_and_unpack_file https://github.com/opencv/opencv/archive/3.4.5.zip opencv-3.4.5
+  #do_git_checkout https://hub.fastgit.org/opencv/opencv.git # too big :|
+  download_and_unpack_file https://hub.fastgit.org/opencv/opencv/archive/3.4.5.zip opencv-3.4.5
   mkdir -p opencv-3.4.5/build
   cd opencv-3.4.5
      apply_patch file://$patch_dir/opencv.detection_based.patch
@@ -1432,7 +1432,7 @@ build_opencv() {
 
 build_facebooktransform360() {
   build_opencv
-  do_git_checkout https://github.com/facebook/transform360.git
+  do_git_checkout https://hub.fastgit.org/facebook/transform360.git
   cd transform360_git
     apply_patch file://$patch_dir/transform360.pi.diff -p1
   cd ..
@@ -1506,7 +1506,7 @@ build_libflite() {
 }
 
 build_libsnappy() {
-  do_git_checkout https://github.com/google/snappy.git snappy_git 1.1.8 # got weird failure once
+  do_git_checkout https://hub.fastgit.org/google/snappy.git snappy_git 1.1.8 # got weird failure once
   cd snappy_git
     do_cmake_and_install "-DBUILD_BINARY=OFF -DCMAKE_BUILD_TYPE=Release -DSNAPPY_BUILD_TESTS=OFF" # extra params from deadsix27 and from new cMakeLists.txt content
     rm -f $mingw_w64_x86_64_prefix/lib/libsnappy.dll.a # unintall shared :|
@@ -1514,7 +1514,7 @@ build_libsnappy() {
 }
 
 build_vamp_plugin() {
-  download_and_unpack_file https://github.com/c4dm/vamp-plugin-sdk/archive/vamp-plugin-sdk-v2.10.tar.gz vamp-plugin-sdk-vamp-plugin-sdk-v2.10
+  download_and_unpack_file https://hub.fastgit.org/c4dm/vamp-plugin-sdk/archive/vamp-plugin-sdk-v2.10.tar.gz vamp-plugin-sdk-vamp-plugin-sdk-v2.10
   cd vamp-plugin-sdk-vamp-plugin-sdk-v2.10
     apply_patch file://$patch_dir/vamp-plugin-sdk-2.10_static-lib.diff
     if [[ $compiler_flavors != "native" && ! -f src/vamp-sdk/PluginAdapter.cpp.bak ]]; then
@@ -1539,7 +1539,7 @@ build_fftw() {
 
 build_libsamplerate() {
   # I think this didn't work with ubuntu 14.04 [too old automake or some odd] :|
-  do_git_checkout https://github.com/erikd/libsamplerate.git
+  do_git_checkout https://hub.fastgit.org/erikd/libsamplerate.git
   cd libsamplerate_git
     generic_configure
     do_make_and_make_install
@@ -1549,7 +1549,7 @@ build_libsamplerate() {
 }
 
 build_librubberband() {
-  do_git_checkout https://github.com/breakfastquay/rubberband.git rubberband_git 18c06ab8c431854056407c467f4755f761e36a8e
+  do_git_checkout https://hub.fastgit.org/breakfastquay/rubberband.git rubberband_git 18c06ab8c431854056407c467f4755f761e36a8e
   cd rubberband_git
     apply_patch file://$patch_dir/rubberband_git_static-lib.diff # create install-static target
     do_configure "--host=$host_target --prefix=$mingw_w64_x86_64_prefix --disable-ladspa"
@@ -1559,9 +1559,9 @@ build_librubberband() {
 }
 
 build_frei0r() {
-  do_git_checkout https://github.com/dyne/frei0r.git
+  do_git_checkout https://hub.fastgit.org/dyne/frei0r.git
   cd frei0r_git
-    sed -i.bak 's/-arch i386//' CMakeLists.txt # OS X https://github.com/dyne/frei0r/issues/64
+    sed -i.bak 's/-arch i386//' CMakeLists.txt # OS X https://hub.fastgit.org/dyne/frei0r/issues/64
     do_cmake_and_install "-DWITHOUT_OPENCV=1" # XXX could look at this more...
 
     mkdir -p $cur_dir/redist # Strip and pack shared libraries.
@@ -1585,7 +1585,7 @@ build_frei0r() {
 }
 
 build_svt-hevc() {
-  do_git_checkout https://github.com/OpenVisualCloud/SVT-HEVC.git
+  do_git_checkout https://hub.fastgit.org/OpenVisualCloud/SVT-HEVC.git
   mkdir -p SVT-HEVC_git/release
   cd SVT-HEVC_git/release
     do_cmake_from_build_dir .. "-DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=AMD64"
@@ -1594,7 +1594,7 @@ build_svt-hevc() {
 }
 
 build_svt-av1() {
-  do_git_checkout https://github.com/OpenVisualCloud/SVT-AV1.git
+  do_git_checkout https://hub.fastgit.org/OpenVisualCloud/SVT-AV1.git
   cd SVT-AV1_git
   cd Build
     do_cmake_from_build_dir .. "-DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=AMD64"
@@ -1603,7 +1603,7 @@ build_svt-av1() {
 }
 
 build_svt-vp9() {
-  do_git_checkout https://github.com/OpenVisualCloud/SVT-VP9.git
+  do_git_checkout https://hub.fastgit.org/OpenVisualCloud/SVT-VP9.git
   cd SVT-VP9_git
   cd Build
     do_cmake_from_build_dir .. "-DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=AMD64"
@@ -1612,14 +1612,14 @@ build_svt-vp9() {
 }
 
 build_vidstab() {
-  do_git_checkout https://github.com/georgmartius/vid.stab.git vid.stab_git
+  do_git_checkout https://hub.fastgit.org/georgmartius/vid.stab.git vid.stab_git
   cd vid.stab_git
     do_cmake_and_install "-DUSE_OMP=0" # '-DUSE_OMP' is on by default, but somehow libgomp ('cygwin_local_install/lib/gcc/i686-pc-cygwin/5.4.0/include/omp.h') can't be found, so '-DUSE_OMP=0' to prevent a compilation error.
   cd ..
 }
 
 build_libmysofa() {
-  do_git_checkout https://github.com/hoene/libmysofa.git libmysofa_git
+  do_git_checkout https://hub.fastgit.org/hoene/libmysofa.git libmysofa_git
   cd libmysofa_git
     local cmake_params="-DBUILD_TESTS=0"
     if [[ $compiler_flavors == "native" ]]; then
@@ -1632,7 +1632,7 @@ build_libmysofa() {
 }
 
 build_libcaca() {
-  do_git_checkout https://github.com/cacalabs/libcaca.git libcaca_git 813baea7a7bc28986e474541dd1080898fac14d7
+  do_git_checkout https://hub.fastgit.org/cacalabs/libcaca.git libcaca_git 813baea7a7bc28986e474541dd1080898fac14d7
   cd libcaca_git
     apply_patch file://$patch_dir/libcaca_git_stdio-cruft.diff -p1 # Fix WinXP incompatibility.
     cd caca
@@ -1668,7 +1668,7 @@ build_zvbi() {
 }
 
 build_fribidi() {
-  download_and_unpack_file https://github.com/fribidi/fribidi/releases/download/v1.0.9/fribidi-1.0.9.tar.xz # Get c2man errors building from repo
+  download_and_unpack_file https://hub.fastgit.org/fribidi/fribidi/releases/download/v1.0.9/fribidi-1.0.9.tar.xz # Get c2man errors building from repo
   cd fribidi-1.0.9
     generic_configure "--disable-debug --disable-deprecated --disable-docs"
     do_make_and_make_install
@@ -1676,10 +1676,10 @@ build_fribidi() {
 }
 
 build_libsrt() {
-  # do_git_checkout https://github.com/Haivision/srt.git
+  # do_git_checkout https://hub.fastgit.org/Haivision/srt.git
   #cd srt_git
-  #download_and_unpack_file https://codeload.github.com/Haivision/srt/tar.gz/v1.3.2 srt-1.3.2
-  download_and_unpack_file https://github.com/Haivision/srt/archive/v1.4.1.tar.gz srt-1.4.1
+  #download_and_unpack_file https://codeload.hub.fastgit.org/Haivision/srt/tar.gz/v1.3.2 srt-1.3.2
+  download_and_unpack_file https://hub.fastgit.org/Haivision/srt/archive/v1.4.1.tar.gz srt-1.4.1
   cd srt-1.4.1
     if [[ $compiler_flavors != "native" ]]; then
       do_cmake "-DUSE_GNUTLS=ON -DENABLE_SHARED=OFF"
@@ -1692,11 +1692,11 @@ build_libsrt() {
 }
 
 build_libass() {
-  do_git_checkout_and_make_install https://github.com/libass/libass.git
+  do_git_checkout_and_make_install https://hub.fastgit.org/libass/libass.git
 }
 
 build_libaribb24() {
-  do_git_checkout https://github.com/nkoriyama/aribb24
+  do_git_checkout https://hub.fastgit.org/nkoriyama/aribb24
   cd aribb24
     generic_configure_make_install
   cd ..
@@ -1708,14 +1708,14 @@ build_libxavs() {
     if [[ ! -f Makefile.bak ]]; then
       sed -i.bak "s/O4/O2/" configure # Change CFLAGS.
     fi
-    do_configure "--host=$host_target --prefix=$mingw_w64_x86_64_prefix --cross-prefix=$cross_prefix" # see https://github.com/rdp/ffmpeg-windows-build-helpers/issues/3
+    do_configure "--host=$host_target --prefix=$mingw_w64_x86_64_prefix --cross-prefix=$cross_prefix" # see https://hub.fastgit.org/rdp/ffmpeg-windows-build-helpers/issues/3
     do_make_and_make_install "$make_prefix_options"
     rm -f NUL # cygwin causes windows explorer to not be able to delete this folder if it has this oddly named file in it...
   cd ..
 }
 
 build_libxavs2() {
-  do_git_checkout https://github.com/pkuvcl/xavs2.git
+  do_git_checkout https://hub.fastgit.org/pkuvcl/xavs2.git
   cd xavs2_git/build/linux
   do_configure "--cross-prefix=$cross_prefix --host=$host_target --prefix=$mingw_w64_x86_64_prefix --enable-pic"
   do_make_and_make_install
@@ -1723,7 +1723,7 @@ build_libxavs2() {
 }
 
 build_libdavs2() {
-  do_git_checkout https://github.com/pkuvcl/davs2.git
+  do_git_checkout https://hub.fastgit.org/pkuvcl/davs2.git
   cd davs2_git/build/linux
   if [[ $host_target == 'i686-w64-mingw32' ]]; then
     do_configure "--cross-prefix=$cross_prefix --host=$host_target --prefix=$mingw_w64_x86_64_prefix --enable-pic --disable-asm"
@@ -1744,7 +1744,7 @@ build_libxvid() {
 }
 
 build_libvpx() {
-  do_git_checkout https://chromium.googlesource.com/webm/libvpx.git
+  do_git_checkout https://hub.fastgit.org/webmproject/libvpx.git
   cd libvpx_git
      apply_patch file://$patch_dir/vpx_160_semaphore.patch -p1 # perhaps someday can remove this after 1.6.0 or mingw fixes it LOL
     if [[ $compiler_flavors == "native" ]]; then
@@ -1790,13 +1790,13 @@ build_dav1d() {
     fi
     do_meson "$meson_options"
     do_ninja_and_ninja_install
-    cp build/src/libdav1d.a $mingw_w64_x86_64_prefix/lib || exit 1 # avoid 'run ranlib' weird failure, possibly older meson's https://github.com/mesonbuild/meson/issues/4138 :|
+    cp build/src/libdav1d.a $mingw_w64_x86_64_prefix/lib || exit 1 # avoid 'run ranlib' weird failure, possibly older meson's https://hub.fastgit.org/mesonbuild/meson/issues/4138 :|
     cpu_count=$original_cpu_count
   cd ..
 }
 
 build_avisynth() {
-  do_git_checkout https://github.com/AviSynth/AviSynthPlus.git avisynth_git
+  do_git_checkout https://hub.fastgit.org/AviSynth/AviSynthPlus.git avisynth_git
   mkdir -p avisynth_git/avisynth-build
   cd avisynth_git/avisynth-build
     do_cmake_from_build_dir .. -DHEADERS_ONLY:bool=on
@@ -1874,7 +1874,7 @@ EOF
 }
 
 build_libopenh264() {
-  do_git_checkout "https://github.com/cisco/openh264.git"
+  do_git_checkout "https://hub.fastgit.org/cisco/openh264.git"
   cd openh264_git
     sed -i.bak "s/_M_X64/_M_DISABLED_X64/" codec/encoder/core/inc/param_svc.h # for 64 bit, avoid missing _set_FMA3_enable, it needed to link against msvcrt120 to get this or something weird?
     if [[ $bits_target == 32 ]]; then
@@ -1949,7 +1949,7 @@ build_libx264() {
 }
 
 build_lsmash() { # an MP4 library
-  do_git_checkout https://github.com/l-smash/l-smash.git l-smash
+  do_git_checkout https://hub.fastgit.org/l-smash/l-smash.git l-smash
   cd l-smash
     do_configure "--prefix=$mingw_w64_x86_64_prefix --cross-prefix=$cross_prefix"
     do_make_and_make_install
@@ -1983,7 +1983,7 @@ build_libdvdcss() {
 }
 
 build_libjpeg_turbo() {
-  do_git_checkout https://github.com/libjpeg-turbo/libjpeg-turbo libjpeg-turbo_git "origin/main"
+  do_git_checkout https://hub.fastgit.org/libjpeg-turbo/libjpeg-turbo libjpeg-turbo_git "origin/main"
   cd libjpeg-turbo_git
     local cmake_params="-DENABLE_SHARED=0 -DCMAKE_ASM_NASM_COMPILER=yasm"
     if [[ $compiler_flavors != "native" ]]; then
@@ -2039,12 +2039,12 @@ build_dvbtee_app() {
   build_iconv # said it needed it
   build_libcurl # it "can use this" so why not
 #  build_libhdhomerun # broken but possible dependency apparently :|
-  do_git_checkout https://github.com/mkrufky/libdvbtee.git libdvbtee_git
+  do_git_checkout https://hub.fastgit.org/mkrufky/libdvbtee.git libdvbtee_git
   cd libdvbtee_git
     # checkout its submodule, apparently required
     if [ ! -e libdvbpsi/bootstrap ]; then
       rm -rf libdvbpsi # remove placeholder
-      do_git_checkout https://github.com/mkrufky/libdvbpsi.git
+      do_git_checkout https://hub.fastgit.org/mkrufky/libdvbpsi.git
       cd libdvbpsi_git
         generic_configure_make_install # library dependency submodule... TODO don't install it, just leave it local :)
       cd ..
@@ -2096,7 +2096,7 @@ build_vlc() {
   build_qt
 
   # currently vlc itself currently broken :|
-  do_git_checkout https://github.com/videolan/vlc.git
+  do_git_checkout https://hub.fastgit.org/videolan/vlc.git
   cd vlc_git
   #apply_patch file://$patch_dir/vlc_localtime_s.patch # git revision needs it...
   # outdated and patch doesn't apply cleanly anymore apparently...
@@ -2112,7 +2112,7 @@ build_vlc() {
   rm -f already_ran_make* # try to force re-link just in case...
   do_make
   # do some gymnastics to avoid building the mozilla plugin for now [couldn't quite get it to work]
-  #sed -i.bak 's_git://git.videolan.org/npapi-vlc.git_https://github.com/rdp/npapi-vlc.git_' Makefile # this wasn't enough...
+  #sed -i.bak 's_git://git.videolan.org/npapi-vlc.git_https://hub.fastgit.org/rdp/npapi-vlc.git_' Makefile # this wasn't enough...
   sed -i.bak "s/package-win-common: package-win-install build-npapi/package-win-common: package-win-install/" Makefile
   sed -i.bak "s/.*cp .*builddir.*npapi-vlc.*//g" Makefile
   make package-win-common # not do_make, fails still at end, plus this way we get new vlc.exe's
@@ -2198,7 +2198,7 @@ build_mplayer() {
 
   download_and_unpack_file https://sourceforge.net/projects/mplayer-edl/files/mplayer-export-snapshot.2014-05-19.tar.bz2 mplayer-export-2014-05-19
   cd mplayer-export-2014-05-19
-    do_git_checkout https://github.com/FFmpeg/FFmpeg ffmpeg d43c303038e9bd # known compatible commit
+    do_git_checkout https://hub.fastgit.org/FFmpeg/FFmpeg ffmpeg d43c303038e9bd # known compatible commit
     export LDFLAGS='-lpthread -ldvdnav -ldvdread -ldvdcss' # not compat with newer dvdread possibly? huh wuh?
     export CFLAGS=-DHAVE_DVDCSS_DVDCSS_H
     do_configure "--enable-cross-compile --host-cc=cc --cc=${cross_prefix}gcc --windres=${cross_prefix}windres --ranlib=${cross_prefix}ranlib --ar=${cross_prefix}ar --as=${cross_prefix}as --nm=${cross_prefix}nm --enable-runtime-cpudetection --extra-cflags=$CFLAGS --with-dvdnav-config=$mingw_w64_x86_64_prefix/bin/dvdnav-config --disable-dvdread-internal --disable-libdvdcss-internal --disable-w32threads --enable-pthreads --extra-libs=-lpthread --enable-debug --enable-ass-internal --enable-dvdread --enable-dvdnav --disable-libvpx-lavc" # haven't reported the ldvdcss thing, think it's to do with possibly it not using dvdread.pc [?] XXX check with trunk
@@ -2220,7 +2220,7 @@ build_mplayer() {
 build_mp4box() { # like build_gpac
   # This script only builds the gpac_static lib plus MP4Box. Other tools inside
   # specify revision until this works: https://sourceforge.net/p/gpac/discussion/287546/thread/72cf332a/
-  do_git_checkout https://github.com/gpac/gpac.git mp4box_gpac_git
+  do_git_checkout https://hub.fastgit.org/gpac/gpac.git mp4box_gpac_git
   cd mp4box_gpac_git
     # are these tweaks needed? If so then complain to the mp4box people about it?
     sed -i.bak "s/has_dvb4linux=\"yes\"/has_dvb4linux=\"no\"/g" configure
@@ -2313,25 +2313,25 @@ build_ffmpeg() {
 
   cd $output_dir
     apply_patch file://$patch_dir/frei0r_load-shared-libraries-dynamically.diff
-    if [ "$bits_target" != "32" ]; then
+    #if [ "$bits_target" != "32" ]; then
 
       # SVT-VP9
       # git apply "$work_dir/SVT-VP9_git/ffmpeg_plugin/master-0001-Add-ability-for-ffmpeg-to-run-svt-vp9.patch"
 
       # SVT-HEVC
       # Apply the correct patches based on version. Logic (n4.4 patch for n4.2, n4.3 and n4.4)  based on patch notes here:
-      # https://github.com/OpenVisualCloud/SVT-HEVC/commit/b5587b09f44bcae70676f14d3bc482e27f07b773#diff-2b35e92117ba43f8397c2036658784ba2059df128c9b8a2625d42bc527dffea1
-      if [[ $ffmpeg_git_checkout_version == *"master"* ]]; then
-        git apply "$work_dir/SVT-HEVC_git/ffmpeg_plugin/master-0001-lavc-svt_hevc-add-libsvt-hevc-encoder-wrapper.patch"
-      elif [[ $ffmpeg_git_checkout_version == *"n4.4"* ]] || [[ $ffmpeg_git_checkout_version == *"n4.3"* ]] || [[ $ffmpeg_git_checkout_version == *"n4.2"* ]]; then
-        git apply "$work_dir/SVT-HEVC_git/ffmpeg_plugin/n4.4-0001-lavc-svt_hevc-add-libsvt-hevc-encoder-wrapper.patch"
-        git apply "$patch_dir/SVT-HEVC-0002-doc-Add-libsvt_hevc-encoder-docs.patch"  # upstream patch does not apply on current ffmpeg master
-      else
-        # PUT PATCHES FOR OTHER VERSIONS HERE
-        :
-      fi
+      # https://hub.fastgit.org/OpenVisualCloud/SVT-HEVC/commit/b5587b09f44bcae70676f14d3bc482e27f07b773#diff-2b35e92117ba43f8397c2036658784ba2059df128c9b8a2625d42bc527dffea1
+    #  if [[ $ffmpeg_git_checkout_version == *"master"* ]]; then
+    #    git apply "$work_dir/SVT-HEVC_git/ffmpeg_plugin/master-0001-lavc-svt_hevc-add-libsvt-hevc-encoder-wrapper.patch"
+    #  elif [[ $ffmpeg_git_checkout_version == *"n4.4"* ]] || [[ $ffmpeg_git_checkout_version == *"n4.3"* ]] || [[ $ffmpeg_git_checkout_version == *"n4.2"* ]]; then
+    #    git apply "$work_dir/SVT-HEVC_git/ffmpeg_plugin/n4.4-0001-lavc-svt_hevc-add-libsvt-hevc-encoder-wrapper.patch"
+    #    git apply "$patch_dir/SVT-HEVC-0002-doc-Add-libsvt_hevc-encoder-docs.patch"  # upstream patch does not apply on current ffmpeg master
+    #  else
+    #    # PUT PATCHES FOR OTHER VERSIONS HERE
+    #    :
+    #  fi
 
-    fi
+    #fi
     if [ "$bits_target" = "32" ]; then
       local arch=x86
     else
@@ -2353,17 +2353,17 @@ build_ffmpeg() {
     fi
     config_options="$init_options --enable-libcaca --enable-gray --enable-libtesseract --enable-fontconfig --enable-gmp --enable-gnutls --enable-libass --enable-libbluray --enable-libbs2b --enable-libflite --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libilbc --enable-libmodplug --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopus --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libvorbis --enable-libwebp --enable-libzimg --enable-libzvbi --enable-libmysofa --enable-libopenjpeg  --enable-libopenh264 --enable-liblensfun  --enable-libvmaf --enable-libsrt --enable-libxml2 --enable-opengl --enable-libdav1d --enable-cuda-llvm"
 
-    if [ "$bits_target" != "32" ]; then
-      config_options+=" --enable-libsvthevc"
-      config_options+=" --enable-libsvtav1"
-      # config_options+=" --enable-libsvtvp9"
-    fi
+    #if [ "$bits_target" != "32" ]; then
+    #  config_options+=" --enable-libsvthevc"
+    #  config_options+=" --enable-libsvtav1"
+    # config_options+=" --enable-libsvtvp9"
+    #fi
 
     #aom must be disabled to use SVT-AV1
-    config_options+=" --enable-libaom"
+    #config_options+=" --enable-libaom"
     #config_options+=" --enable-libsvtav1" #not currently working but compiles if configured
 
-    #libxvid must be disabled to use SVT-VP9 (26 lines below); working alongside libvpx was added in https://github.com/OpenVisualCloud/SVT-VP9/pull/71 so vpx no longer needs to be disabled
+    #libxvid must be disabled to use SVT-VP9 (26 lines below); working alongside libvpx was added in https://hub.fastgit.org/OpenVisualCloud/SVT-VP9/pull/71 so vpx no longer needs to be disabled
     config_options+=" --enable-libvpx"
     #config_options+=" --enable-libsvtvp9" #not currently working but compiles if configured
 
@@ -2382,7 +2382,7 @@ build_ffmpeg() {
       config_options+=" --enable-amf" # This is actually autodetected but for consistency.. we might as well set it.
     fi
 
-    if [[ $build_intel_qsv = y && $compiler_flavors != "native" ]]; then # Broken for native builds right now: https://github.com/lu-zero/mfx_dispatch/issues/71
+    if [[ $build_intel_qsv = y && $compiler_flavors != "native" ]]; then # Broken for native builds right now: https://hub.fastgit.org/lu-zero/mfx_dispatch/issues/71
       config_options+=" --enable-libmfx"
     else
       config_options+=" --disable-libmfx"
@@ -2443,7 +2443,7 @@ build_ffmpeg() {
 
     # XXX really ffmpeg should have set this up right but doesn't, patch FFmpeg itself instead...
     if [[ $1 == "static" ]]; then
-      if [[ $build_intel_qsv = y  && $compiler_flavors != "native" ]]; then # Broken for native builds right now: https://github.com/lu-zero/mfx_dispatch/issues/71
+      if [[ $build_intel_qsv = y  && $compiler_flavors != "native" ]]; then # Broken for native builds right now: https://hub.fastgit.org/lu-zero/mfx_dispatch/issues/71
         sed -i.bak 's/-lavutil -lm.*/-lavutil -lm -lmfx -lstdc++ -lpthread/' "$PKG_CONFIG_PATH/libavutil.pc"
       else
         sed -i.bak 's/-lavutil -lm.*/-lavutil -lm -lpthread/' "$PKG_CONFIG_PATH/libavutil.pc"
@@ -2498,7 +2498,7 @@ build_lsw() {
    # Build L-Smash-Works, which are plugins based on lsmash
    #build_ffmpeg static # dependency, assume already built
    build_lsmash # dependency
-   do_git_checkout https://github.com/VFR-maniac/L-SMASH-Works.git lsw
+   do_git_checkout https://hub.fastgit.org/VFR-maniac/L-SMASH-Works.git lsw
    cd lsw/VapourSynth
      do_configure "--prefix=$mingw_w64_x86_64_prefix --cross-prefix=$cross_prefix --target-os=mingw"
      do_make_and_make_install
@@ -2553,7 +2553,7 @@ build_ffmpeg_dependencies() {
   if [[ $build_amd_amf = y ]]; then
     build_amd_amf_headers
   fi
-  if [[ $build_intel_qsv = y && $compiler_flavors != "native" ]]; then # Broken for native builds right now: https://github.com/lu-zero/mfx_dispatch/issues/71
+  if [[ $build_intel_qsv = y && $compiler_flavors != "native" ]]; then # Broken for native builds right now: https://hub.fastgit.org/lu-zero/mfx_dispatch/issues/71
     build_intel_quicksync_mfx
   fi
   build_nv_headers
@@ -2602,11 +2602,11 @@ build_ffmpeg_dependencies() {
   build_libsamplerate # Needs libsndfile >= 1.0.6 and fftw >= 0.15.0 for tests. Uses dlfcn.
   build_librubberband # Needs libsamplerate, libsndfile, fftw and vamp_plugin. 'configure' will fail otherwise. Eventhough librubberband doesn't necessarily need them (libsndfile only for 'rubberband.exe' and vamp_plugin only for "Vamp audio analysis plugin"). How to use the bundled libraries '-DUSE_SPEEX' and '-DUSE_KISSFFT'?
   build_frei0r # Needs dlfcn. could use opencv...
-  if [ "$bits_target" != "32" ]; then
-    build_svt-hevc
-    build_svt-av1
-    build_svt-vp9
-  fi
+  #if [ "$bits_target" != "32" ]; then
+  #  build_svt-hevc
+  #  build_svt-av1
+  #  build_svt-vp9
+  #fi
   build_vidstab
   #build_facebooktransform360 # needs modified ffmpeg to use it
   build_libmysofa # Needed for FFmpeg's SOFAlizer filter (https://ffmpeg.org/ffmpeg-filters.html#sofalizer). Uses dlfcn.
@@ -2629,7 +2629,7 @@ build_ffmpeg_dependencies() {
   build_libvpx
   build_libx265
   build_libopenh264
-  build_libaom
+  #build_libaom
   build_dav1d
   build_avisynth
   build_libx264 # at bottom as it might internally build a coy of ffmpeg (which needs all the above deps...
@@ -2725,7 +2725,7 @@ ffmpeg_git_checkout_version=
 build_ismindex=n
 enable_gpl=y
 build_x264_with_libav=n # To build x264 with Libavformat.
-ffmpeg_git_checkout="https://github.com/FFmpeg/FFmpeg.git"
+ffmpeg_git_checkout="https://hub.fastgit.org/FFmpeg/FFmpeg.git"
 ffmpeg_source_dir=
 
 # parse command line parameters, if any
@@ -2735,7 +2735,7 @@ while true; do
       --build-ffmpeg-static=y  (ffmpeg.exe, ffplay.exe and ffprobe.exe)
       --build-ffmpeg-shared=n  (ffmpeg.exe (with libavformat-x.dll, etc., ffplay.exe, ffprobe.exe and dll-files)
       --ffmpeg-git-checkout-version=[master] if you want to build a particular version of FFmpeg, ex: n3.1.1 or a specific git hash
-      --ffmpeg-git-checkout=[https://github.com/FFmpeg/FFmpeg.git] if you want to clone FFmpeg from other repositories
+      --ffmpeg-git-checkout=[https://hub.fastgit.org/FFmpeg/FFmpeg.git] if you want to clone FFmpeg from other repositories
       --ffmpeg-source-dir=[default empty] specifiy the directory of ffmpeg source code. When specified, git will not be used.
       --x265-git-checkout-version=[master] if you want to build a particular version of x265, ex: --x265-git-checkout-version=Release_3.2 or a specific git hash
       --fdk-aac-git-checkout-version= if you want to build a particular version of fdk-aac, ex: --fdk-aac-git-checkout-version=v2.0.1 or another tag
